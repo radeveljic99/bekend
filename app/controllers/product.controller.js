@@ -28,3 +28,16 @@ exports.create = (req, res) => {
         else res.send(data);
     });
 }
+
+exports.search = ( req, res) => {
+
+    Product.search(req.query.search, ( err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while finding the product."
+            });
+        else res.send(data);
+    })
+
+}

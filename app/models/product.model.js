@@ -30,4 +30,17 @@ Product.getAll = result => {
         result(null, res);
     })
 }
+
+Product.search = (productName, result) => {
+    sql.query(`SELECT * FROM product WHERE name LIKE '%${productName}%'`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        console.log("Products found by search ", res);
+        result(null, res);
+    })
+}
+
 module.exports = Product;
