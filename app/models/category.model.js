@@ -32,6 +32,25 @@ Category.findById = (categoryId, result) => {
     });
 };
 
+Category.findPage = (categoryId, page, productsPerPage, result) => {
+    sql.query('SELECT * FROM product WHERE category_id = ?  LIMIT ? OFFSET ?',
+        [parseInt(categoryId), parseInt(productsPerPage), ( page - 1 ) * parseInt(productsPerPage)],
+        (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(err, null);
+                return;
+            }
+            if (res.length) {
+                console.log("found category: ", res);
+                result(null, res);
+                return;
+            }
+            result({kind: "not_found"}, null);
+        });
+}
+
+
 Category.findAllProducts = (categoryId, result) => {
     sql.query("SELECT * FROM product WHERE category_id = ?", categoryId, (err, res) => {
         if (err) {
@@ -78,7 +97,6 @@ Category.updateById = (id, category, result) => {
                 result(null, err);
                 return;
             }
-
             if (res.affectedRows == 0) {
                 result({kind: "not_found"}, null);
                 return;
@@ -120,6 +138,18 @@ Category.removeAll = result => {
         result(null, res);
     });
 };
+
+Category.countProducts = (categoryId, result) => {
+    sql.query("SELECT COUNT(*) AS broj_proizvoda FROM product WHERE category_id =  ? " , categoryId , (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        console.log("number of products : ", res[0]);
+        result(null, res[0]);
+    })
+}
 
 module.exports = Category;
 

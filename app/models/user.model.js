@@ -30,8 +30,8 @@ User.findById = (userId, result) => {
             result({kind: "not_found"}, null);
             return;
         }
-        console.log("updated user: ", {id: userId});
-        result(null, {id: userId});
+        console.log("updated user: ", res[0]);
+        result(null, res[0]);
     });
 };
 

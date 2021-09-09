@@ -67,12 +67,37 @@ exports.findOne = (req, res) => {
 };
 
 exports.findProducts = (req, res) => {
-    Category.findAllProducts(req.params.categoryId, (err, data)=> {
-        if(err) {
+    if (req.query.page && req.query.productsPerPage) {
+        Category.findPage(req.params.categoryId, req.query.page, req.query.productsPerPage, (err, data) => {
+            if (err) {
+                res.status(500).send({
+                    message: "Error retrieving products"
+                });
+            } else {
+                res.send(data);
+            }
+        })
+    } else {
+        Category.findAllProducts(req.params.categoryId, (err, data) => {
+            if (err) {
+                res.status(500).send({
+                    message: "Error retrieving products"
+                });
+            } else {
+                res.send(data);
+            }
+        });
+    }
+
+}
+
+exports.countProducts = (req, res) => {
+    Category.countProducts(req.params.categoryId, (err, data) => {
+        if (err) {
             res.status(500).send({
                 message: "Error retrieving products"
             });
-        }else {
+        } else {
             res.send(data);
         }
     });

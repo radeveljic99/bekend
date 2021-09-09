@@ -5,6 +5,7 @@ module.exports = app => {
     app.post("/users", users.create);
     app.get('/users/email/:email', users.findByEmail);
     app.put('/users/:userId/:balance', users.changeBalance);
+
 }
 
 
