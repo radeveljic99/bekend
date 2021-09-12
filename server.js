@@ -12,9 +12,9 @@ const storage = multer.diskStorage({
         const fileName = req.body.name
         cb(null, fileName)
     }
-})
+}) ;
 
-const upload = multer({storage: storage})
+const upload = multer({storage: storage}) ;
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());

@@ -43,4 +43,17 @@ Product.search = (productName, result) => {
     })
 }
 
+Product.category = (productId, result) => {
+    sql.query(`SELECT c.name FROM (SELECT * FROM product WHERE id=${productId}) as temp INNER JOIN category as c 
+    ON temp.category_id = c.id`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        console.log("products", res[0]);
+        result(null, res[0]);
+    })
+}
+
 module.exports = Product;

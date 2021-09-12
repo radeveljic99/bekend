@@ -41,3 +41,14 @@ exports.search = ( req, res) => {
     })
 
 }
+
+exports.category = ( req, res ) => {
+    Product.category(req.params.productId, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while finding the category for given product."
+            });
+        else res.send(data);
+    })
+}

@@ -3,4 +3,5 @@ module.exports = app => {
     app.get("/products", products.findAll);
     app.post("/products", products.create);
     app.get("/products/searchProducts", products.search);
+    app.get("/productCategory/:productId", products.category);
 }
