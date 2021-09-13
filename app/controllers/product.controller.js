@@ -52,3 +52,14 @@ exports.category = ( req, res ) => {
         else res.send(data);
     })
 }
+
+exports.updateNumberOfProducts = (req, res) => {
+    Product.updateNumberOfProducts(req.params.productId, req.body.numberOfProducts,(err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while updating the number of products for given product."
+            });
+        else res.send(data);
+    })
+}

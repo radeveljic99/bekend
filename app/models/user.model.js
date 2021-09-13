@@ -65,8 +65,7 @@ User.changeBalance = (userId, balance, result) => {
         }
         console.log("updated user: ", {id: userId});
         result(null,res.data);
-    })
-
+    });
 }
 
 module.exports = User;

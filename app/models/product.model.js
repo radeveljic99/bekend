@@ -1,6 +1,6 @@
 const sql = require('./db.js');
 
-const Product = function(product) {
+const Product = function (product) {
     this.name = product.name;
     this.price = product.price;
     this.path = product.path;
@@ -9,7 +9,7 @@ const Product = function(product) {
 
 Product.create = (newProduct, result) => {
     sql.query("INSERT INTO product SET ? ", newProduct, (err, res) => {
-        if(err){
+        if (err) {
             console.log('error: ', err);
             result(err, null);
             return;
@@ -53,6 +53,24 @@ Product.category = (productId, result) => {
         }
         console.log("products", res[0]);
         result(null, res[0]);
+    })
+}
+
+Product.updateNumberOfProducts = (productId, numberOfProducts, result) => {
+    sql.query('UPDATE product SET number_of_products= ? WHERE id = ? ', [numberOfProducts, productId], (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        if (res.affectedRows == 0) {
+            result({kind: "not_found"}, null);
+            return;
+        }
+
+        console.log("updated product with product_id: ", productId);
+        result(null, res);
     })
 }
 
